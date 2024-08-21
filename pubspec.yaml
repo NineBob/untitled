@@ -34,7 +34,22 @@ dependencies:
   path_provider:
   dio: ^5.3.3
   cloud_firestore: ^4.13.6
-
+  http:
+  convex_bottom_bar:
+  flutter_svg:
+  url_launcher: ^6.0.12
+  fl_chart: ^0.62.0
+  flutter_animate: ^4.2.0+1
+  flutter_riverpod: ^2.4.0
+  freezed: ^2.4.2
+  timelines: ^0.1.0
+  json_annotation: ^4.8.1
+  freezed_annotation: ^2.4.1
+  sliding_up_panel: ^2.0.0+1
+  flex_color_scheme: ^7.2.0
+  device_preview: ^1.1.0
+  flutter_typeahead:
+  google_fonts: ^2.1.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -49,6 +64,10 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
+  riverpod_lint: ^2.0.4
+  custom_lint: ^0.5.3
+  json_serializable: ^6.7.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -62,9 +81,11 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/
+    - assets/recipes.json
+    - assets/images/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -77,10 +98,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Schyler
+      fonts:
+        - asset: fonts/Prompt-Medium.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

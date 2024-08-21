@@ -27,8 +27,9 @@ class _SearchProductState extends State<SearchProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.orange,
+        toolbarHeight: 80,
         title: Container(
-
           width: double.infinity,
           height: 40,
           decoration: BoxDecoration(
@@ -37,13 +38,13 @@ class _SearchProductState extends State<SearchProduct> {
           ),
           child: Center(
             child: TextField(
+              style: TextStyle(color: Colors.black,fontWeight: FontWeight.normal),
               onChanged: (value) => _searchValue = value,
               decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.play_circle),
-                    onPressed: () async {
 
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () async {
                       var result = await widget.dbHelper.Products(_searchValue);
                       resultProducts.clear();
                       for (var i =0;i<result.length;i++){
@@ -54,6 +55,7 @@ class _SearchProductState extends State<SearchProduct> {
                   ),
 
                   hintText: 'Search...',
+                  hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none),
             ),
 

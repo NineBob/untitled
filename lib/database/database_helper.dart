@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:untitled/database/model.dart';
+import 'package:untitled/database/Recipes.dart';
 
 
 
@@ -34,13 +35,60 @@ class DatabaseHelper {
         ${Product.colDescription} TEXT NOT NULL,
         ${Product.colPrice} NUMERIC NOT NULL,
         ${Product.colTime} TEXT NOT NULL,
-        ${Product.colFavorite} INTEGER NOT NULL
+        ${Product.colFavorite} INTEGER NOT NULL,
+        ${Product.colunit} TEXT NOT NULL,
+        ${Product.colkeep} TEXT NOT NULL,
+        ${Product.colhistory} TEXT NOT NULL
       )
    ''');
-
-
+    await db.execute('''
+      CREATE TABLE ${TodoItem.tableName} (
+        ${TodoItem.coluserid} INTEGER PRIMARY KEY,
+        ${TodoItem.colid} INTEGER NOT NULL,
+        ${TodoItem.coltitle} TEXT NOT NULL
+      )
+   ''');
   }
 
+  Future<int> insertTodoItem(TodoItem todoItem) async {
+    Database db = await database;
+    return await db.insert(
+      TodoItem.tableName,
+      todoItem.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  // update
+  Future<int> updateTodoItem(TodoItem todoItem) async {
+    Database db = await database;
+    return await db.update(TodoItem.tableName, todoItem.toMap(),
+        where: '${TodoItem.coluserid}=?', whereArgs: [todoItem.userId]);
+  }
+
+  // delete
+  Future<int> deleteTodoItem(String name) async {
+    Database db = await database;
+    return await db.delete(TodoItem.tableName,
+        where: '${TodoItem.coluserid}=?', whereArgs: [name]);
+  }
+
+
+  Future<List<TodoItem>> fetchTodoItem() async {
+    Database db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(TodoItem.tableName);
+    if (maps.isEmpty) {
+      return [];
+    } else {
+      return List.generate(maps.length, (index) {
+        return TodoItem(
+          userId: maps[index][TodoItem.coluserid],
+          id: maps[index][TodoItem.colid],
+          title: maps[index][TodoItem.coltitle] ,
+        );
+      });
+    }
+  }
   // Insert
   Future<int> insertProduct(Product product) async {
     Database db = await database;
@@ -79,6 +127,9 @@ class DatabaseHelper {
           price: maps[index][Product.colPrice] + 0.00,
           time: maps[index][Product.colTime],
           favorite: maps[index][Product.colFavorite],
+          keep: maps[index][Product.colkeep],
+          unit: maps[index][Product.colunit],
+          history: maps[index][Product.colhistory],
         );
       });
     }
@@ -101,6 +152,9 @@ class DatabaseHelper {
               price: maps[index][Product.colPrice] + 0.00,
               time: maps[index][Product.colTime],
               favorite: maps[index][Product.colFavorite],
+              keep: maps[index][Product.colkeep],
+              unit: maps[index][Product.colunit],
+              history: maps[index][Product.colhistory],
             );
           });
         }
@@ -114,6 +168,9 @@ class DatabaseHelper {
             price: maps[index][Product.colPrice] + 0.00,
             time: maps[index][Product.colTime],
             favorite: maps[index][Product.colFavorite],
+            keep: maps[index][Product.colkeep],
+            unit: maps[index][Product.colunit],
+            history: maps[index][Product.colhistory],
           );
         });
       }
@@ -132,6 +189,9 @@ class DatabaseHelper {
           price: maps[index][Product.colPrice] + 0.00,
           time: maps[index][Product.colTime],
           favorite: maps[index][Product.colFavorite],
+          keep: maps[index][Product.colkeep],
+          unit: maps[index][Product.colunit],
+          history: maps[index][Product.colhistory],
         );
       });
     }
